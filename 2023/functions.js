@@ -10,143 +10,37 @@ async function day1b(file) {
   const data = await parseData(file) //parse file into a string
   const nums = data
     .split('\n') // split string into individual lines
-    .map((s) => {
-      const letters = s.split('')
+    .map((string) => {
+      const letters = string.split('')
       let first = letters.reduce((a, c, i) => {
-        if (a) return a
-        if ([1, 2, 3, 4, 5, 6, 7, 8, 9].includes(Number(c))) return Number(c)
-        if (
-          c === 'o' &&
-          letters[i + 1] === 'n' &&
-          letters[i + 2] === 'e' &&
-          letters.length >= i + 2
-        )
-          return 1
-        if (
-          c === 't' &&
-          letters[i + 1] === 'w' &&
-          letters[i + 2] === 'o' &&
-          letters.length >= i + 2
-        )
-          return 2
-        if (
-          c === 't' &&
-          letters[i + 1] === 'h' &&
-          letters[i + 2] === 'r' &&
-          letters[i + 3] === 'e' &&
-          letters[i + 4] === 'e' &&
-          letters.length >= i + 4
-        )
-          return 3
-        if (
-          c === 'f' &&
-          letters[i + 1] === 'o' &&
-          letters[i + 2] === 'u' &&
-          letters[i + 3] === 'r' &&
-          letters.length >= i + 3
-        )
-          return 4
-        if (
-          c === 'f' &&
-          letters[i + 1] === 'i' &&
-          letters[i + 2] === 'v' &&
-          letters[i + 3] === 'e' &&
-          letters.length >= i + 3
-        )
-          return 5
-        if (
-          c === 's' &&
-          letters[i + 1] === 'i' &&
-          letters[i + 2] === 'x' &&
-          letters.length >= i + 2
-        )
-          return 6
-        if (
-          c === 's' &&
-          letters[i + 1] === 'e' &&
-          letters[i + 2] === 'v' &&
-          letters[i + 3] === 'e' &&
-          letters[i + 4] === 'n' &&
-          letters.length >= i + 4
-        )
-          return 7
-        if (
-          c === 'e' &&
-          letters[i + 1] === 'i' &&
-          letters[i + 2] === 'g' &&
-          letters[i + 3] === 'h' &&
-          letters[i + 4] === 't' &&
-          letters.length >= i + 4
-        )
-          return 8
-        if (
-          c === 'n' &&
-          letters[i + 1] === 'i' &&
-          letters[i + 2] === 'n' &&
-          letters[i + 3] === 'e' &&
-          letters.length >= i + 3
-        )
-          return 9
+        if (a) return a //if the loop has already found the number, keep returning that
+        if (/[1-9]/.test(c)) return c //if the current character is a numeral, return that
+        if (c === 'o' && string.substring(i, i + 3) === 'one') return '1' //if it's a letter, test if it's the start of the word version of the number
+        if (c === 't' && string.substring(i, i + 3) === 'two') return '2'
+        if (c === 't' && string.substring(i, i + 5) === 'three') return '3'
+        if (c === 'f' && string.substring(i, i + 4) === 'four') return '4'
+        if (c === 'f' && string.substring(i, i + 4) === 'five') return '5'
+        if (c === 's' && string.substring(i, i + 3) === 'six') return '6'
+        if (c === 's' && string.substring(i, i + 5) === 'seven') return '7'
+        if (c === 'e' && string.substring(i, i + 5) === 'eight') return '8'
+        if (c === 'n' && string.substring(i, i + 4) === 'nine') return '9'
       }, null)
+
       let last = letters.reduceRight((a, c, i) => {
         if (a) return a
-        if ([1, 2, 3, 4, 5, 6, 7, 8, 9].includes(Number(c))) return Number(c)
-        if (c === 'e' && letters[i - 1] === 'n' && letters[i - 2] === 'o')
-          return 1
-        if (c === 'o' && letters[i - 1] === 'w' && letters[i - 2] === 't')
-          return 2
-        if (
-          c === 'e' &&
-          letters[i - 1] === 'e' &&
-          letters[i - 2] === 'r' &&
-          letters[i - 3] === 'h' &&
-          letters[i - 4] === 't'
-        )
-          return 3
-        if (
-          c === 'r' &&
-          letters[i - 1] === 'u' &&
-          letters[i - 2] === 'o' &&
-          letters[i - 3] === 'f'
-        )
-          return 4
-        if (
-          c === 'e' &&
-          letters[i - 1] === 'v' &&
-          letters[i - 2] === 'i' &&
-          letters[i - 3] === 'f'
-        )
-          return 5
-        if (c === 'x' && letters[i - 1] === 'i' && letters[i - 2] === 's')
-          return 6
-        if (
-          c === 'n' &&
-          letters[i - 1] === 'e' &&
-          letters[i - 2] === 'v' &&
-          letters[i - 3] === 'e' &&
-          letters[i - 4] === 's'
-        )
-          return 7
-        if (
-          c === 't' &&
-          letters[i - 1] === 'h' &&
-          letters[i - 2] === 'g' &&
-          letters[i - 3] === 'i' &&
-          letters[i - 4] === 'e'
-        )
-          return 8
-        if (
-          c === 'e' &&
-          letters[i - 1] === 'n' &&
-          letters[i - 2] === 'i' &&
-          letters[i - 3] === 'n'
-        )
-          return 9
+        if (/[1-9]/.test(c)) return c
+        if (c === 'e' && string.substring(i - 2, i + 1) === 'one') return '1'
+        if (c === 'o' && string.substring(i - 2, i + 1) === 'two') return '2'
+        if (c === 'e' && string.substring(i - 4, i + 1) === 'three') return '3'
+        if (c === 'r' && string.substring(i - 3, i + 1) === 'four') return '4'
+        if (c === 'e' && string.substring(i - 3, i + 1) === 'five') return '5'
+        if (c === 'x' && string.substring(i - 2, i + 1) === 'six') return '6'
+        if (c === 'n' && string.substring(i - 4, i + 1) === 'seven') return '7'
+        if (c === 't' && string.substring(i - 4, i + 1) === 'eight') return '8'
+        if (c === 'e' && string.substring(i - 3, i + 1) === 'nine') return '9'
       }, null)
-      const joined = '' + first + last
-      return Number(joined)
+      return Number(first + last)
     })
-  console.table(nums)
   return nums.reduce((a, c) => a + c, 0) // calculate sum of all numbers
 }
 
