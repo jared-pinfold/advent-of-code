@@ -1,13 +1,17 @@
-import { readFile } from 'node:fs/promises'
+function day1(data) {
+  // const data = await parseData(file) //parse file into a string
 
-async function parseData(file) {
-  const filePath = new URL('./data/' + file, import.meta.url)
-  const data = await readFile(filePath, { encoding: 'utf-8' })
   return data
+    .split('\n') // split string into individual lines
+    .map((s) => {
+      const nums = s.replaceAll(/[a-z]/g, '') //remove letters from each line
+      return Number(nums[0] + nums[nums.length - 1]) // get first and last digits from each line and convert to a number
+    })
+    .reduce((a, c) => a + c, 0) // calculate sum of all numbers
 }
 
-async function day1b(file) {
-  const data = await parseData(file) //parse file into a string
+function day1b(data) {
+  // const data = await parseData(file) //parse file into a string
   const nums = data
     .split('\n') // split string into individual lines
     .map((string) => {
@@ -44,19 +48,7 @@ async function day1b(file) {
   return nums.reduce((a, c) => a + c, 0) // calculate sum of all numbers
 }
 
-async function day1(file) {
-  const data = await parseData(file) //parse file into a string
-
-  return data
-    .split('\n') // split string into individual lines
-    .map((s) => {
-      const nums = s.replaceAll(/[a-z]/g, '') //remove letters from each line
-      return Number(nums[0] + nums[nums.length - 1]) // get first and last digits from each line and convert to a number
-    })
-    .reduce((a, c) => a + c, 0) // calculate sum of all numbers
-}
-
-export const funcs = {
+export {
   day1,
   day1b,
 }
