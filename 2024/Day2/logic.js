@@ -37,5 +37,3 @@ export async function day2() {
   )
   return safety.reduce((a, c) => (c.safe ? a + 1 : a), 0)
 }
-
-export async function day2b() {}
