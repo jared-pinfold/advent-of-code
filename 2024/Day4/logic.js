@@ -18,7 +18,6 @@ export async function day4() {
   return count
 }
 
-export async function day4b() {}
 function checkXmas(coords, game) {
   return [
     direction('nw', coords, game),
@@ -61,7 +60,7 @@ function direction(direction, startingCoords, game) {
   } catch (e) {
     return false
   }
-  
+
   return true
 }
 
